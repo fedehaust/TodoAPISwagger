@@ -15,41 +15,67 @@ using TodoApi.Models;
 
 namespace TodoAPISwagger
 {
-  public class Startup
-  {
-    public Startup(IConfiguration configuration)
+    public class Startup
     {
-      Configuration = configuration;
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddDbContext<TodoContext>(opt =>
+              opt.UseInMemoryDatabase("TodoList"));
+            services.AddControllers();
+
+            services.AddSwaggerGen(setupAction =>
+            {
+
+              setupAction.SwaggerDoc(
+              $"TodoApiSwagger",
+              new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                  Title = "Todo API",
+                  Version = "v1",
+                  Description = "Aplicación de ejemplo para usar en charla de GDG Córdoba Argentina",
+                  Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                  {
+                      Email = "fedehaust@gmail.com",
+                      Name = "Federico Haustein",
+                      Url = new Uri("https://www.federicohaustein.com")
+                  },
+                  License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                  {
+                      Name = "MIT License",
+                      Url = new Uri("https://opensource.org/licenses/MIT")
+                  }
+                });
+            });
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseHttpsRedirection();
+            
+            app.UseSwagger(); //https://localhost:5001/swagger/TodoApiSwagger/swagger.json
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
     }
-
-    public IConfiguration Configuration { get; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.AddDbContext<TodoContext>(opt =>
-   opt.UseInMemoryDatabase("TodoList"));
-      services.AddControllers();
-    }
-
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-
-      app.UseHttpsRedirection();
-
-      app.UseRouting();
-
-      app.UseAuthorization();
-
-      app.UseEndpoints(endpoints =>
-      {
-        endpoints.MapControllers();
-      });
-    }
-  }
 }
