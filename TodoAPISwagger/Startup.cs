@@ -31,10 +31,10 @@ namespace TodoAPISwagger
               opt.UseInMemoryDatabase("TodoList"));
             services.AddControllers();
 
-            services.AddSwaggerGen(setupAction =>
+            services.AddSwaggerGen(setup =>
             {
 
-              setupAction.SwaggerDoc(
+              setup.SwaggerDoc(
               $"TodoApiSwagger",
               new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
@@ -67,6 +67,12 @@ namespace TodoAPISwagger
             app.UseHttpsRedirection();
             
             app.UseSwagger(); //https://localhost:5001/swagger/TodoApiSwagger/swagger.json
+
+            app.UseSwaggerUI(setup =>
+            {
+              setup.SwaggerEndpoint("/swagger/TodoApiSwagger/swagger.json", "Todo API");
+              setup.RoutePrefix = "";
+            });
 
             app.UseRouting();
 
