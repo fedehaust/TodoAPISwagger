@@ -6,4 +6,6 @@ Links útiles
 
 Net Core CLI: https://docs.microsoft.com/en-us/dotnet/core/tutorials/cli-create-console-app
 Todo API: https://docs.microsoft.com/en-us/samples/aspnet/aspnetcore.docs/getstarted-swashbuckle-aspnetcore/?tabs=visual-studio
+Get Started Swashbuckle: https://docs.microsoft.com/en-us/samples/aspnet/aspnetcore.docs/getstarted-swashbuckle-aspnetcore/?tabs=visual-studio
 Swashbucle nuget: https://www.nuget.org/packages/Swashbuckle.AspNetCore/
+C# XML Extension: https://marketplace.visualstudio.com/items?itemName=k--kato.docomment

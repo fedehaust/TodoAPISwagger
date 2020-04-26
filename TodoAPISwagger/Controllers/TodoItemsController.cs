@@ -22,7 +22,10 @@ namespace TodoApi.Controllers
     }
     #endregion
 
-    // GET: api/TodoItems
+    /// <summary>
+    /// Obtener todos los TodoItems
+    /// </summary>
+    /// <returns>Lista de Todo Items</returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
     {
@@ -30,7 +33,11 @@ namespace TodoApi.Controllers
     }
 
     #region snippet_GetByID
-    // GET: api/TodoItems/5
+    /// <summary>
+    /// Obtener un TodoItem por su id
+    /// </summary>
+    /// <param name="id">El id del item que se quiere obtener</param>
+    /// <returns>Una instancia de TodoItem</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
     {
