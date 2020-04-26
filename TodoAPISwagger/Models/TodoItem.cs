@@ -1,24 +1,28 @@
-﻿#define First
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TodoApi.Models
 {
-#if First
-  #region snippet
-  public class TodoItem
-  {
-    public long Id { get; set; }
-    public string Name { get; set; }
-    public bool IsComplete { get; set; }
-  }
-  #endregion
-#else
-    // Use this to test you can over-post
+    /// <summary>
+    /// Un item a completar con id, nombre y estado
+    /// </summary>
     public class TodoItem
     {
+        /// <summary>
+        /// Id del item
+        /// </summary>
+        [Required]
         public long Id { get; set; }
+        /// <summary>
+        /// El nombre que va a posser nuestro item
+        /// </summary>
+        [Required]
+        [MaxLength(150)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Indicador de si la tarea esta compleatada o no
+        /// </summary>
+        [Required]
         public bool IsComplete { get; set; }
-        public string Secret { get; set; }
     }
-#endif
 }

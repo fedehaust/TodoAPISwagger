@@ -9,3 +9,4 @@ Todo API: https://docs.microsoft.com/en-us/samples/aspnet/aspnetcore.docs/getsta
 Get Started Swashbuckle: https://docs.microsoft.com/en-us/samples/aspnet/aspnetcore.docs/getstarted-swashbuckle-aspnetcore/?tabs=visual-studio
 Swashbucle nuget: https://www.nuget.org/packages/Swashbuckle.AspNetCore/
 C# XML Extension: https://marketplace.visualstudio.com/items?itemName=k--kato.docomment
+dotnet-watch: https://docs.microsoft.com/en-us/aspnet/core/tutorials/dotnet-watch?view=aspnetcore-3.1
