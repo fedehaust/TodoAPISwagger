@@ -53,7 +53,20 @@ namespace TodoApi.Controllers
     #endregion
 
     #region snippet_Update
-    // PUT: api/TodoItems/5
+    /// <summary>
+    /// Actualizar un item
+    /// </summary>
+    /// <param name="id">El id del item que se quiere actualizar</param>
+    /// <param name="todoItem">Item que se quiere actualizar</param>
+    /// <remarks>Ejemplo de **body** del request para modificar item  
+    /// 
+    /// PUT /api/TodoItems/id
+    /// { 
+    ///     "id": 1, 
+    ///     "name": "Bañar al perro", 
+    ///     "isComplete": false 
+    /// } 
+    /// </remarks>
     [HttpPut("{id}")]
     public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
     {

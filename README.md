@@ -10,3 +10,4 @@ Get Started Swashbuckle: https://docs.microsoft.com/en-us/samples/aspnet/aspnetc
 Swashbucle nuget: https://www.nuget.org/packages/Swashbuckle.AspNetCore/
 C# XML Extension: https://marketplace.visualstudio.com/items?itemName=k--kato.docomment
 dotnet-watch: https://docs.microsoft.com/en-us/aspnet/core/tutorials/dotnet-watch?view=aspnetcore-3.1
+Markdown sintaxis: https://www.markdownguide.org/basic-syntax/
