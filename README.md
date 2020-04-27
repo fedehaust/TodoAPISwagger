@@ -15,3 +15,4 @@ API Analyzers: https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/ana
 Actions return Types: https://docs.microsoft.com/en-us/aspnet/core/web-api/action-return-types?view=aspnetcore-3.1
 Web API Conventions: https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/conventions?view=aspnetcore-3.1
 NewtonsoftJson: https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.NewtonsoftJson/
+Format Responses: https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/formatting?view=aspnetcore-3.1
