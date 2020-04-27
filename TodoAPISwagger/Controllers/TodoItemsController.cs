@@ -105,7 +105,11 @@ namespace TodoApi.Controllers
         #endregion
 
         #region snippet_Create
-        // POST: api/TodoItems
+        /// <summary>
+        /// Agregar un item
+        /// </summary>
+        /// <param name="todoItem">Item que se quiere insertar</param>
+        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
@@ -119,7 +123,11 @@ namespace TodoApi.Controllers
         #endregion
 
         #region snippet_Delete
-        // DELETE: api/TodoItems/5
+        /// <summary>
+        /// Borrar un item
+        /// </summary>
+        /// <param name="id">El id del item que se quiere obtener borrar</param>
+        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpDelete("{id}")]

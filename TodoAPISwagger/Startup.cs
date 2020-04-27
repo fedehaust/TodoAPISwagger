@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using TodoApi.Models;
 
 namespace TodoAPISwagger
@@ -31,8 +32,16 @@ namespace TodoAPISwagger
         {
             services.AddDbContext<TodoContext>(opt =>
               opt.UseInMemoryDatabase("TodoList"));
-            services.AddControllers();
-
+            services.AddControllers(confg =>
+            {
+                confg.ReturnHttpNotAcceptable = true;
+            }).AddNewtonsoftJson(confg =>
+             {
+                 confg.SerializerSettings.ContractResolver =
+                    new CamelCasePropertyNamesContractResolver();
+             })
+            .AddXmlDataContractSerializerFormatters();
+            
             services.AddSwaggerGen(setup =>
             {
 
