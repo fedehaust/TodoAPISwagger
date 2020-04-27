@@ -122,6 +122,8 @@ namespace TodoAPISwagger
 
             app.UseSwaggerUI(setup =>
             {
+                setup.InjectStylesheet("/custom.css");
+                setup.InjectJavascript("/custom.js"); 
                 foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
                     setup.SwaggerEndpoint($"/swagger/" +
@@ -130,7 +132,7 @@ namespace TodoAPISwagger
                 }
                 setup.RoutePrefix = "";
             });
-
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthorization();
