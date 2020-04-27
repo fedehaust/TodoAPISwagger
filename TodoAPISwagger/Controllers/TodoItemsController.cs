@@ -11,8 +11,9 @@ namespace TodoApi.Controllers
 {
     #region TodoController
     [Route("api/[controller]")]
-    [Produces("application/json","application/xml")]
-    [Consumes("application/json","application/xml")]
+    [Produces("application/json", "application/xml")]
+    [Consumes("application/json", "application/xml")]
+    [ApiExplorerSettings(GroupName = "TodoApiSwagger")]
     [ApiController]
     public class TodoItemsController : ControllerBase
     {

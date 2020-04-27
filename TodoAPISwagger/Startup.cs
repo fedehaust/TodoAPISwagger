@@ -44,7 +44,6 @@ namespace TodoAPISwagger
             
             services.AddSwaggerGen(setup =>
             {
-
               setup.SwaggerDoc(
               $"TodoApiSwagger",
               new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -65,6 +64,25 @@ namespace TodoAPISwagger
                   }
                 });
                 
+              setup.SwaggerDoc(
+              $"TodoApiSwaggerWeather",
+              new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                  Title = "Todo API Weather",
+                  Version = "v1",
+                  Description = "Aplicación de ejemplo para usar en charla de GDG Córdoba Argentina",
+                  Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                  {
+                      Email = "fedehaust@gmail.com",
+                      Name = "Federico Haustein",
+                      Url = new Uri("https://www.federicohaustein.com")
+                  },
+                  License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                  {
+                      Name = "MIT License",
+                      Url = new Uri("https://opensource.org/licenses/MIT")
+                  }
+                });
               var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
               var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
               setup.IncludeXmlComments(xmlPath);            
@@ -86,6 +104,7 @@ namespace TodoAPISwagger
             app.UseSwaggerUI(setup =>
             {
               setup.SwaggerEndpoint("/swagger/TodoApiSwagger/swagger.json", "Todo API");
+              setup.SwaggerEndpoint("/swagger/TodoApiSwaggerWeather/swagger.json", "Todo API Weather");
               setup.RoutePrefix = "";
             });
 

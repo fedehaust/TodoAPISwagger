@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace TodoAPISwagger.Controllers
 {
   [ApiController]
+  [ApiExplorerSettings(GroupName="TodoApiSwaggerWeather")]
   [Route("[controller]")]
   public class WeatherForecastController : ControllerBase
   {
