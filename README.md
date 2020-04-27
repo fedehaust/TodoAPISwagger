@@ -12,3 +12,5 @@ C# XML Extension: https://marketplace.visualstudio.com/items?itemName=k--kato.do
 dotnet-watch: https://docs.microsoft.com/en-us/aspnet/core/tutorials/dotnet-watch?view=aspnetcore-3.1
 Markdown sintaxis: https://www.markdownguide.org/basic-syntax/
 API Analyzers: https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/analyzers?view=aspnetcore-3.1&tabs=visual-studio
+Actions return Types: https://docs.microsoft.com/en-us/aspnet/core/web-api/action-return-types?view=aspnetcore-3.1
+Web API Conventions: https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/conventions?view=aspnetcore-3.1
