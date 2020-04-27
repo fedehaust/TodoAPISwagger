@@ -38,6 +38,10 @@ namespace TodoApi.Controllers
     /// </summary>
     /// <param name="id">El id del item que se quiere obtener</param>
     /// <returns>Una instancia de TodoItem</returns>
+    /// <response code="200">Retorna el item solicitado</response>
+    [ProducesResponseType(StatusCodes.Status400BadRequest,Type = typeof(TodoItem))]
+    [ProducesResponseType(StatusCodes.Status404NotFound,Type = typeof(TodoItem))]
+    [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(TodoItem))]
     [HttpGet("{id}")]
     public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
     {
