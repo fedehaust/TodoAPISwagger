@@ -15,6 +15,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using TodoApi.Models;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace TodoAPISwagger
 {
@@ -41,56 +44,72 @@ namespace TodoAPISwagger
                     new CamelCasePropertyNamesContractResolver();
              })
             .AddXmlDataContractSerializerFormatters();
-            
+
+            services.AddVersionedApiExplorer(setupAction =>
+            {
+                setupAction.GroupNameFormat = "'v'VV";
+            });
+
+            services.AddApiVersioning(setupAction =>
+            {
+                setupAction.AssumeDefaultVersionWhenUnspecified = true;
+                setupAction.DefaultApiVersion = new ApiVersion(1, 0);
+                setupAction.ReportApiVersions = true;
+            });
+
+            var apiVersionDescriptionProvider =
+               services.BuildServiceProvider().GetService<IApiVersionDescriptionProvider>();
+
             services.AddSwaggerGen(setup =>
             {
-              setup.SwaggerDoc(
-              $"TodoApiSwagger",
-              new Microsoft.OpenApi.Models.OpenApiInfo()
+                foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
-                  Title = "Todo API",
-                  Version = "v1",
-                  Description = "Aplicación de ejemplo para usar en charla de GDG Córdoba Argentina",
-                  Contact = new Microsoft.OpenApi.Models.OpenApiContact()
-                  {
-                      Email = "fedehaust@gmail.com",
-                      Name = "Federico Haustein",
-                      Url = new Uri("https://www.federicohaustein.com")
-                  },
-                  License = new Microsoft.OpenApi.Models.OpenApiLicense()
-                  {
-                      Name = "MIT License",
-                      Url = new Uri("https://opensource.org/licenses/MIT")
-                  }
-                });
-                
-              setup.SwaggerDoc(
-              $"TodoApiSwaggerWeather",
-              new Microsoft.OpenApi.Models.OpenApiInfo()
+                    setup.SwaggerDoc(
+                        $"TodoApiSwagger{description.GroupName}",
+                        new Microsoft.OpenApi.Models.OpenApiInfo()
+                        {
+                            Title = "Todo API",
+                            Version = description.ApiVersion.ToString(),
+                            Description = "Aplicación de ejemplo para usar en charla de GDG Córdoba Argentina",
+                            Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                            {
+                                Email = "fedehaust@gmail.com",
+                                Name = "Federico Haustein",
+                                Url = new Uri("https://www.federicohaustein.com")
+                            },
+                            License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                            {
+                                Name = "MIT License",
+                                Url = new Uri("https://opensource.org/licenses/MIT")
+                            }
+                        });
+                }
+                setup.DocInclusionPredicate((documentName, apiDescription) =>
                 {
-                  Title = "Todo API Weather",
-                  Version = "v1",
-                  Description = "Aplicación de ejemplo para usar en charla de GDG Córdoba Argentina",
-                  Contact = new Microsoft.OpenApi.Models.OpenApiContact()
-                  {
-                      Email = "fedehaust@gmail.com",
-                      Name = "Federico Haustein",
-                      Url = new Uri("https://www.federicohaustein.com")
-                  },
-                  License = new Microsoft.OpenApi.Models.OpenApiLicense()
-                  {
-                      Name = "MIT License",
-                      Url = new Uri("https://opensource.org/licenses/MIT")
-                  }
+                    var actionApiVersionModel = apiDescription.ActionDescriptor
+                    .GetApiVersionModel(ApiVersionMapping.Explicit | ApiVersionMapping.Implicit);
+
+                    if (actionApiVersionModel == null)
+                    {
+                        return true;
+                    }
+
+                    if (actionApiVersionModel.DeclaredApiVersions.Any())
+                    {
+                        return actionApiVersionModel.DeclaredApiVersions.Any(v =>
+                        $"TodoApiSwaggerv{v.ToString()}" == documentName);
+                    }
+                    return actionApiVersionModel.ImplementedApiVersions.Any(v =>
+                        $"TodoApiSwaggerv{v.ToString()}" == documentName);
                 });
-              var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-              var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-              setup.IncludeXmlComments(xmlPath);            
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                setup.IncludeXmlComments(xmlPath);
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
         {
             if (env.IsDevelopment())
             {
@@ -98,14 +117,18 @@ namespace TodoAPISwagger
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseSwagger(); //https://localhost:5001/swagger/TodoApiSwagger/swagger.json
 
             app.UseSwaggerUI(setup =>
             {
-              setup.SwaggerEndpoint("/swagger/TodoApiSwagger/swagger.json", "Todo API");
-              setup.SwaggerEndpoint("/swagger/TodoApiSwaggerWeather/swagger.json", "Todo API Weather");
-              setup.RoutePrefix = "";
+                foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+                {
+                    setup.SwaggerEndpoint($"/swagger/" +
+                        $"TodoApiSwagger{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+                }
+                setup.RoutePrefix = "";
             });
 
             app.UseRouting();
